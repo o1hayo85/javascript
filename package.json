@@ -1,0 +1,25 @@
+{
+  "name": "javascript",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test:promise": "promises-aplus-tests javascript_code/promise"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/o1hayo85/javascript.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/o1hayo85/javascript/issues"
+  },
+  "homepage": "https://github.com/o1hayo85/javascript#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "promises-aplus-tests": "^2.1.2"
+  }
+}
