@@ -87,7 +87,7 @@ export default class LinkedList {
   }
 
   /**
-   * delete 删除链表中的某个元素
+   * delete 删除链表中的匹配的第一个元素 只支持基本类型的删除
    * @param {*} value  要删除的元素
    * @return {LinkedListNode}
    */
@@ -95,6 +95,118 @@ export default class LinkedList {
     if(!this.head) {
       return null;
     }
+
+    let currentNode = this.head;
+    if(this.head.value === value) {
+      this.head = currentNode.next;
+      return currentNode;
+    }    
+
+    while(currentNode.next && currentNode.next.value !== value) {
+      currentNode = currentNode.next;
+    }
+
+    const nextNode = currentNode.next;
+    // 没有找到该节点
+    if(!nextNode) {
+      return null;
+    } else {
+      if(nextNode.next) {
+        currentNode.next = nextNode.next;
+      } else {
+        this.tail = currentNode;
+        currentNode.next = null;
+      }
+    }
+    return nextNode;
+  }
+
+  /**
+   * deleteTail 删除链表末尾节点
+   * @return {LinkedListNode}
+   */
+  deleteTail() {
+    if(!this.tail) {
+      return null;
+    }
+    
+    const deleteNode = this.tail;
+    if(this.tail === this.head) {
+      this.tail = null;
+      this.head = null;
+      return deleteNode;
+    }
+
+    let currentNode = this.head;
+    while(currentNode.next) {
+      // 没有下一个节点
+      if(!currentNode.next.next) {
+        currentNode.next = null;
+      } else {
+        currentNode = currentNode.next;
+      }
+    }
+
+    this.tail = currentNode;
+    return deleteNode;
+  }
+
+  /**
+   * deleteHead 删除链表头节点
+   * @return {LinkedListNode}
+   */
+  deleteHead() {
+    if(!this.head) {
+      return null;
+    }
+
+    const deleteNode = this.head;
+
+    if(this.head.next) {
+      this.head = this.head.next;
+    } else {
+      this.tail = null;
+      this.head = null;
+    }
+
+    return deleteNode;
+  }
+
+  /**
+   * @param {Object} findParams 查找的参数
+   * @param {*} findParams.value
+   * @param {function} [findParams.callback]
+   * @return {LinkedListNode | null}
+   */
+  find({ value = null , callback = null }) {
+    if(!this.head) {
+      return null;
+    }
+
+    let currentNode = this.head;
+    while(currentNode) {
+      if(callback && callback(currentNode.value)) {
+        return currentNode;
+      }
+
+      if(value === currentNode.value) {
+        return currentNode;
+      }
+
+      currentNode = currentNode.next;
+    }
+
+    return null;
+  }
+
+  /**
+   * @param {*[]} values - Array of values that need to be converted to linked list.
+   * @return {LinkedList}
+   */
+  fromArray(values) {
+    values.forEach((value) => this.append(value));
+
+    return this;
   }
 
   /**
@@ -112,6 +224,31 @@ export default class LinkedList {
 
     return list;
   }
+
+  /**
+   * reverse 将链表翻转
+   * @return {LinkedList}
+   */
+  reverse() {
+    let currentNode = this.head;
+    let preNode = null;
+    let nextNode = null;
+
+    while(currentNode) {
+      nextNode = currentNode.next;
+      currentNode.next = preNode;
+
+      // next node
+      preNode = currentNode;
+      currentNode = nextNode;
+    }
+
+    this.tail = this.head;
+    this.head = preNode;
+
+    return this;
+  }
+
 
   /**
    * toString 将链表内容转换为字符串
