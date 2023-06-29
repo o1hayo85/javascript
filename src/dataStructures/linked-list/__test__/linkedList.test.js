@@ -196,4 +196,39 @@ describe('linkedList', () => {
     expect(linkedList.head.value).toBe(1);
     expect(linkedList.tail.value).toBe(3);
   });
+
+  it('should traverse linked list', () => {
+    const linkedList = new LinkedList();
+    linkedList
+      .append(1)
+      .append(2)
+      .append(3)
+      .append(5)
+
+    const traversedNodeValues = [];
+    const traversalCallback = (nodeValue) => {
+      traversedNodeValues.push(nodeValue);
+    };
+
+    linkedList.forEach(traversalCallback);
+    expect(traversedNodeValues).toEqual([1, 2, 3, 5]);
+  })
+
+  it('should traverse linked list in reverse order', () => {
+    const linkedList = new LinkedList();
+
+    linkedList
+      .append(1)
+      .append(2)
+      .append(3);
+
+    const traversedNodeValues = [];
+    const traversalCallback = (nodeValue) => {
+      traversedNodeValues.push(nodeValue);
+    };
+
+    linkedList.reverseForEach(traversalCallback);
+
+    expect(traversedNodeValues).toEqual([3, 2, 1]);
+  });
 })

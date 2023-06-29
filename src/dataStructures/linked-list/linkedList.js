@@ -249,6 +249,46 @@ export default class LinkedList {
     return this;
   }
 
+  /**
+   * forEach callback
+   * @callback callback
+   * @param {*} value
+   * @param {number} [index]
+   */
+
+  /**
+   * forEach 遍历链表
+   * @param {callback} callback 
+   */
+  forEach(callback) {
+    if(!callback) {
+      return
+    }
+
+    let currentNode = this.head;
+    let index = 0;
+    while(currentNode) {
+      callback(currentNode.value, index)
+      currentNode = currentNode.next;
+      index++;
+    }
+  }
+
+  /**
+   * reverseForEach 反向遍历
+   * @param {callback} callback
+   */
+  reverseForEach(callback) {
+    function exec(node, callback) {
+      if(node) {
+        exec(node.next, callback);
+        callback(node.value);
+      }
+    }
+
+    exec(this.head, callback);
+  }
+
 
   /**
    * toString 将链表内容转换为字符串
